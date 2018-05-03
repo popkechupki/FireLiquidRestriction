@@ -24,10 +24,13 @@ public class NoExplodeNoIgnite extends PluginBase implements Listener {
 	public void onIgnite(BlockIgniteEvent event) {
 		switch (event.getCause()) {
 			case LAVA: 
-			case SPREAD: 
-			case FLINT_AND_STEEL: 
+			case SPREAD:
 				event.setCancelled();
 				getServer().broadcastMessage(TextFormat.RED + "NoExplodeNoIgnite" + TextFormat.WHITE + ">> " + TextFormat.GREEN + "ブロックへの着火をキャンセルしました。");
+				break;
+			case FLINT_AND_STEEL:
+				event.setCancelled();
+				getServer().broadcastMessage(TextFormat.RED + "NoExplodeNoIgnite" + TextFormat.WHITE + ">> " + TextFormat.GREEN + "ブロックへの着火をキャンセルしました。\n" + TextFormat.YELLOW + event.getEntity().getName() + TextFormat.WHITE + "が火打石を使用しました。");
 				break;
 		}
 	}
