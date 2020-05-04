@@ -12,16 +12,22 @@ import cn.nukkit.event.block.BlockPlaceEvent;
 import cn.nukkit.event.block.LiquidFlowEvent;
 import cn.nukkit.event.entity.EntityExplodeEvent;
 import cn.nukkit.event.player.PlayerBucketEmptyEvent;
+import cn.nukkit.event.player.PlayerBucketFillEvent;
 import cn.nukkit.plugin.PluginBase;
+import cn.nukkit.utils.Config;
 import cn.nukkit.utils.TextFormat;
+
+import java.io.File;
 
 public class FireLiquidRestriction extends PluginBase implements Listener {
     private static final int CONFIG_VERSION = 1;
+    private Config config;
 
     @Override
     public void onEnable() {
         saveResource("config.yml", false);
-        if (getConfig().getInt("version") < CONFIG_VERSION) {
+        config = new Config(new File("./plugins/FireLiquidRestriction", "config.yml"), Config.YAML);
+        if (config.getInt("version") < CONFIG_VERSION) {
             getServer().getLogger().warning("[FireLiquidRestriction] Please delete old config file.");
             getServer().getPluginManager().disablePlugin(this);
         }
@@ -30,44 +36,44 @@ public class FireLiquidRestriction extends PluginBase implements Listener {
 
     @EventHandler(priority = EventPriority.NORMAL)
     public void onBlockIgnite(BlockIgniteEvent event) {
-        if (getConfig().getStringList("IgnoreWorlds").contains(event.getBlock().getLocation().getLevel().getName())) return;
-        if (getConfig().getBoolean("RestrictIgnite")) {
+        if (config.getStringList("IgnoreWorlds").contains(event.getBlock().getLocation().getLevel().getName())) return;
+        if (config.getBoolean("RestrictIgnite.force")) {
             event.setCancelled();
             sendMessage("RestrictIgnite");
         } else {
             switch (event.getCause()) {
                 case LAVA:
-                    if (getConfig().getBoolean("ByLava")) {
+                    if (config.getBoolean("ByLava")) {
                         event.setCancelled();
                         sendMessage("RestrictIgnite");
                     }
                     break;
                 case SPREAD:
-                    if (getConfig().getBoolean("ByFireSpread")) {
+                    if (config.getBoolean("ByFireSpread")) {
                         event.setCancelled();
                         sendMessage("RestrictIgnite");
                     }
                     break;
                 case FIREBALL:
-                    if (getConfig().getBoolean("ByFireBall")) {
+                    if (config.getBoolean("ByFireBall")) {
                         event.setCancelled();
                         sendMessage("RestrictIgnite");
                     }
                     break;
                 case EXPLOSION:
-                    if (getConfig().getBoolean("ByExplosion")) {
+                    if (config.getBoolean("ByExplosion")) {
                         event.setCancelled();
                         sendMessage("RestrictIgnite");
                     }
                     break;
                 case LIGHTNING:
-                    if (getConfig().getBoolean("ByLightning")) {
+                    if (config.getBoolean("ByLightning")) {
                         event.setCancelled();
                         sendMessage("RestrictIgnite");
                     }
                     break;
                 case FLINT_AND_STEEL:
-                    if (getConfig().getBoolean("ByFlintAndSteel")) {
+                    if (config.getBoolean("ByFlintAndSteel")) {
                         event.setCancelled();
                         sendMessage("RestrictIgnite");
                     }
@@ -78,8 +84,8 @@ public class FireLiquidRestriction extends PluginBase implements Listener {
 
     @EventHandler(priority = EventPriority.NORMAL)
     public void onExplosion(EntityExplodeEvent event) {
-        if (getConfig().getStringList("IgnoreWorlds").contains(event.getPosition().getLevel().getName())) return;
-        if (getConfig().getBoolean("CancelExplosion")) {
+        if (config.getStringList("IgnoreWorlds").contains(event.getPosition().getLevel().getName())) return;
+        if (config.getBoolean("CancelExplosion.force")) {
             event.setCancelled();
             sendMessage("CancelExplosion");
         }
@@ -87,20 +93,21 @@ public class FireLiquidRestriction extends PluginBase implements Listener {
 
     @EventHandler(priority = EventPriority.NORMAL)
     public void onBlockPlace(BlockPlaceEvent event) {
-        if (getConfig().getStringList("IgnoreWorlds").contains(event.getBlock().getLocation().getLevel().getName())) return;
-        if (getConfig().getBoolean("RestrictPlace")) {
+        if (config.getStringList("IgnoreWorlds").contains(event.getBlock().getLocation().getLevel().getName())) return;
+        if (config.getBoolean("RestrictPlace.force")) {
+            if (event.getBlock().getId() != Block.LAVA && event.getBlock().getId() != Block.WATER) return;
             event.setCancelled();
             sendMessage("RestrictPlace");
         } else {
             switch (event.getBlock().getId()) {
                 case Block.LAVA:
-                    if (getConfig().getBoolean("RestrictPlaceLava")) {
+                    if (config.getBoolean("RestrictPlaceLava")) {
                         event.setCancelled();
                         sendMessage("RestrictPlace");
                     }
                     break;
                 case Block.WATER:
-                    if (getConfig().getBoolean("RestrictPlaceWatar")) {
+                    if (config.getBoolean("RestrictPlaceWatar")) {
                         event.setCancelled();
                         sendMessage("RestrictPlace");
                     }
@@ -111,14 +118,29 @@ public class FireLiquidRestriction extends PluginBase implements Listener {
 
     @EventHandler(priority = EventPriority.NORMAL)
     public void onBucketEmpty(PlayerBucketEmptyEvent event) {
-        if (getConfig().getStringList("IgnoreWorlds").contains(event.getPlayer().getLocation().getLevel().getName())) return;
-        if (getConfig().getBoolean("RestrictUsingBucket")) {
+        if (config.getStringList("IgnoreWorlds").contains(event.getPlayer().getLocation().getLevel().getName())) return;
+        if (config.getBoolean("RestrictUsingBucket.force")) {
             event.setCancelled();
             sendMessage("RestrictUsingBucket");
-        } else if (event.getBucket().getName().equals("Lava Bucket") && getConfig().getBoolean("RestrictUsingLavaBucket")) {
+        } else if (event.getBucket().getName().equals("Lava Bucket") && config.getBoolean("RestrictUsingLavaBucket")) {
             event.setCancelled();
             sendMessage("RestrictUsingBucket");
-        } else if (event.getBucket().getName().equals("Watar Bucket") && getConfig().getBoolean("RestrictUsingWatarBucket")) {
+        } else if (event.getBucket().getName().equals("Water Bucket") && config.getBoolean("RestrictUsingWatarBucket")) {
+            event.setCancelled();
+            sendMessage("RestrictUsingBucket");
+        }
+    }
+
+    @EventHandler(priority = EventPriority.NORMAL)
+    public void onBucketFill(PlayerBucketFillEvent event) {
+        if (config.getStringList("IgnoreWorlds").contains(event.getPlayer().getLocation().getLevel().getName())) return;
+        if (config.getBoolean("RestrictUsingBucket.force")) {
+            event.setCancelled();
+            sendMessage("RestrictUsingBucket");
+        } else if (event.getBlockClicked() instanceof BlockLava && config.getBoolean("RestrictUsingLavaBucket")) {
+            event.setCancelled();
+            sendMessage("RestrictUsingBucket");
+        } else if (event.getBlockClicked() instanceof BlockWater && config.getBoolean("RestrictUsingWatarBucket")) {
             event.setCancelled();
             sendMessage("RestrictUsingBucket");
         }
@@ -126,16 +148,16 @@ public class FireLiquidRestriction extends PluginBase implements Listener {
 
     @EventHandler(priority = EventPriority.NORMAL)
     public void onLiquidFlow(LiquidFlowEvent event) {
-        if (getConfig().getStringList("IgnoreWorlds").contains(event.getBlock().getLocation().getLevel().getName())) return;
-        if (getConfig().getBoolean("RestrictFlow") || event.getSource() instanceof BlockLava || event.getSource() instanceof BlockWater) {
+        if (config.getStringList("IgnoreWorlds").contains(event.getBlock().getLocation().getLevel().getName())) return;
+        if (config.getBoolean("RestrictFlow.force") || event.getSource() instanceof BlockLava || event.getSource() instanceof BlockWater) {
             event.setCancelled();
             sendMessage("RestrictFlow");
         }
     }
 
     private void sendMessage(String configKey) {
-        if (getConfig().getBoolean(configKey+".message")) {
-            Server.getInstance().broadcastMessage(TextFormat.RED+"FLR>>"+TextFormat.YELLOW+getConfig().getString(configKey+".content"));
+        if (config.getBoolean(configKey+".message")) {
+            Server.getInstance().broadcastMessage(TextFormat.RED+"FLR>>"+TextFormat.YELLOW+config.getString(configKey+".content"));
         }
     }
 }

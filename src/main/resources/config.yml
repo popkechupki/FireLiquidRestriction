@@ -12,9 +12,10 @@ IgnoreWorlds:
   - "NAME"
 
 ## 着火関係の設定
-### この設定をfalseに変えると個別に設定した要因以外では着火を許可します。
+### forceをfalseに変えると個別に設定した要因以外では着火を許可します。
 ### messageをfalseにするとメッセージは流れなくなります。
-RestrictIgnite: true
+RestrictIgnite:
+  force: true
   message: true
   content: "ブロックへの着火をキャンセルしました！"
 ### 個別の着火要因による制限
@@ -32,17 +33,20 @@ ByFireBall: true
 ByExplosion: true
 
 ## 爆発の制限
+### forceをfalseにすると爆発を許可します。
 ### messageをfalseにするとメッセージは流れなくなります。
-CancelExplosion: true
+CancelExplosion:
+  force: true
   message: true
   content: "爆発をキャンセルしました！"
 
 ## バケツによる設置の制限
-### この設定をfalseに変えると個別に設定した内容次第では許可するようになります。
+### forceをfalseに変えると個別に設定した内容次第では許可するようになります。
 ### messageをfalseにするとメッセージは流れなくなります。
-RestrictUsingBucket: true
+RestrictUsingBucket:
+  force: true
   message: true
-  content: "液体の設置をキャンセルしました！"
+  content: "液体の設置・取得をキャンセルしました！"
 ### 個別の設定
 ### マグマ
 RestrictUsingLavaBucket: true
@@ -50,9 +54,10 @@ RestrictUsingLavaBucket: true
 RestrictUsingWatarBucket: true
 
 ## 水・マグマブロックの設置の制限
-### この設定をfalseに変えると個別に設定した内容次第では許可するようになります。
+### forceをfalseに変えると個別に設定した内容次第では許可するようになります。
 ### messageをfalseにするとメッセージは流れなくなります。
-RestrictPlace: true
+RestrictPlace:
+  force: true
   message: true
   content: "液体プロックの設置をキャンセルしました！"
 ### 個別の設定
@@ -62,9 +67,10 @@ RestrictPlaceLava: true
 RestrictPlaceWatar: true
 
 ## 水・マグマの流れを制限
-### この設定をfalseに変えると個別に設定した内容次第では許可するようになります。
+### forceをfalseに変えると個別に設定した内容次第では許可するようになります。
 ### messageをfalseにするとメッセージは流れなくなります。
-RestrictFlow: true
+RestrictFlow:
+  force: true
   message: true
   content: "液体の流出をキャンセルしました！"
 ### 個別の設定
