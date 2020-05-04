@@ -15,15 +15,16 @@ import cn.nukkit.event.player.PlayerBucketEmptyEvent;
 import cn.nukkit.plugin.PluginBase;
 import cn.nukkit.utils.TextFormat;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
-
 public class FireLiquidRestriction extends PluginBase implements Listener {
     private static final int CONFIG_VERSION = 1;
 
     @Override
     public void onEnable() {
-        initConfig();
+        saveResource("config.yml", false);
+        if (getConfig().getInt("version") < CONFIG_VERSION) {
+            getServer().getLogger().warning("[FireLiquidRestriction] Please delete old config file.");
+            getServer().getPluginManager().disablePlugin(this);
+        }
         getServer().getPluginManager().registerEvents(this, this);
     }
 
@@ -135,23 +136,6 @@ public class FireLiquidRestriction extends PluginBase implements Listener {
     private void sendMessage(String configKey) {
         if (getConfig().getBoolean(configKey+".message")) {
             Server.getInstance().broadcastMessage(TextFormat.RED+"FLR>>"+TextFormat.YELLOW+getConfig().getString(configKey+".content"));
-        }
-    }
-
-    private void initConfig() {
-        if (getConfig() == null) {
-            saveResource("config.yml");
-        } else if (getConfig().getInt("version") < CONFIG_VERSION){
-            Map<String, Object> map = new LinkedHashMap<>();
-            getConfig().getAll().keySet().forEach(key -> {
-                map.put(key, getConfig().get(key));
-            });
-            saveResource("config.yml", true);
-            map.keySet().forEach(key -> {
-                getConfig().set(key, map.get(key));
-            });
-            getConfig().set("version", CONFIG_VERSION);
-            saveConfig();
         }
     }
 }
