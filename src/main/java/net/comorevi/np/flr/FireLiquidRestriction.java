@@ -31,7 +31,7 @@ public class FireLiquidRestriction extends PluginBase implements Listener {
         initConfig();
     }
 
-    @EventHandler(priority = EventPriority.NORMAL)
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void onBlockIgnite(BlockIgniteEvent event) {
         if (config.getStringList("IgnoreWorlds").contains(event.getBlock().getLocation().getLevel().getName())) return;
         if (config.getBoolean("RestrictIgnite.force")) {
@@ -79,7 +79,7 @@ public class FireLiquidRestriction extends PluginBase implements Listener {
         }
     }
 
-    @EventHandler(priority = EventPriority.NORMAL)
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void onExplosion(EntityExplodeEvent event) {
         if (config.getStringList("IgnoreWorlds").contains(event.getPosition().getLevel().getName())) return;
         if (config.getBoolean("CancelExplosion.force")) {
@@ -88,7 +88,7 @@ public class FireLiquidRestriction extends PluginBase implements Listener {
         }
     }
 
-    @EventHandler(priority = EventPriority.NORMAL)
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void onBlockPlace(BlockPlaceEvent event) {
         if (config.getStringList("IgnoreWorlds").contains(event.getBlock().getLocation().getLevel().getName())) return;
         if (config.getBoolean("RestrictPlace.force")) {
@@ -113,7 +113,7 @@ public class FireLiquidRestriction extends PluginBase implements Listener {
         }
     }
 
-    @EventHandler(priority = EventPriority.NORMAL)
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void onBucketEmpty(PlayerBucketEmptyEvent event) {
         if (config.getStringList("IgnoreWorlds").contains(event.getPlayer().getLocation().getLevel().getName())) return;
         if (config.getBoolean("RestrictUsingBucket.force")) {
@@ -128,7 +128,7 @@ public class FireLiquidRestriction extends PluginBase implements Listener {
         }
     }
 
-    @EventHandler(priority = EventPriority.NORMAL)
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void onBucketFill(PlayerBucketFillEvent event) {
         if (config.getStringList("IgnoreWorlds").contains(event.getPlayer().getLocation().getLevel().getName())) return;
         if (config.getBoolean("RestrictUsingBucket.force")) {
@@ -143,7 +143,7 @@ public class FireLiquidRestriction extends PluginBase implements Listener {
         }
     }
 
-    @EventHandler(priority = EventPriority.NORMAL)
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void onLiquidFlow(LiquidFlowEvent event) {
         if (config.getStringList("IgnoreWorlds").contains(event.getBlock().getLocation().getLevel().getName())) return;
         if (config.getBoolean("RestrictFlow.force") || event.getSource() instanceof BlockLava || event.getSource() instanceof BlockWater) {

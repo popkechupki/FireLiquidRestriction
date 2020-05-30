@@ -1,6 +1,6 @@
 name: FireLiquidRestriction
 main: net.comorevi.np.flr.FireLiquidRestriction
-version: 1.3.2
+version: 1.3.3
 author: popkechupki
 api: ["1.0.0"]
 description: Cancel explode, ignite and spread lava and water.
