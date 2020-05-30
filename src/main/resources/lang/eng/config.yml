@@ -1,0 +1,80 @@
+# Config version. DO NOT CHANGE!
+version: 2
+
+## Prefix
+prefix: "FLR>> "
+
+## Set except worlds which is ignore configured restriction.
+IgnoreWorlds:
+  - "ENTER"
+  - "IGNORE"
+  - "WORLD's"
+  - "NAME"
+
+## Restrict ignition.
+RestrictIgnite:
+  ## If you set false, you can configure detail.
+  force: true
+  ## If you set false, this plugin is not send warn message.
+  message: true
+  content: "Cancel ignition to block."
+### Detail settings
+#### Restrict ignition by flint and steel.
+ByFlintAndSteel: true
+#### Restrict ignition by spread.
+ByFireSpread: true
+#### Restrict ignition by lava.
+ByLava: true
+#### Restrict ignition by lighting.
+ByLightning: true
+#### Restrict ignition by fire ball.
+ByFireBall: true
+#### Restrict ignition by explosion.
+ByExplosion: true
+
+## Restrict explosion.
+CancelExplosion:
+  ## If you set false, this plugin don't restrict explosion.
+  force: true
+  ## If you set false, this plugin is not send warn message.
+  message: true
+  content: "Cancel explosion."
+
+## Restrict using bucket.
+RestrictUsingBucket:
+  ## If you set false, you can configure detail.
+  force: true
+  ## If you set false, this plugin is not send warn message.
+  message: true
+  content: "液体の設置・取得をキャンセルしました！"
+### Detail settings
+#### Lava
+RestrictUsingLavaBucket: true
+#### Water
+RestrictUsingWatarBucket: true
+
+## Restrict place water and lava block.
+RestrictPlace:
+  ## If you set false, you can configure detail.
+  force: true
+  ## If you set false, this plugin is not send warn message.
+  message: true
+  content: "Cancel placement liquid blocks."
+### Detail settings
+#### Lava
+RestrictPlaceLava: true
+#### Water
+RestrictPlaceWatar: true
+
+## Restrict flow of water and lava.
+RestrictFlow:
+  ## If you set false, you can configure detail.
+  force: true
+  ## If you set false, this plugin is not send warn message.
+  message: true
+  content: "Cancel liquid flow."
+### Detail settings
+#### Lava
+RestrictFlowLava: true
+#### Water
+RestrictFlowWatar: true

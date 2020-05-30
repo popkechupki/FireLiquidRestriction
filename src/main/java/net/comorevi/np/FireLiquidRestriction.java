@@ -16,22 +16,19 @@ import cn.nukkit.event.player.PlayerBucketFillEvent;
 import cn.nukkit.plugin.PluginBase;
 import cn.nukkit.utils.Config;
 import cn.nukkit.utils.TextFormat;
+import net.comorevi.np.util.LanguageManager;
 
 import java.io.File;
 
 public class FireLiquidRestriction extends PluginBase implements Listener {
     private static final int CONFIG_VERSION = 1;
+    private static String PREFIX = "FLR>>";
     private Config config;
 
     @Override
     public void onEnable() {
-        saveResource("config.yml", false);
-        config = new Config(new File("./plugins/FireLiquidRestriction", "config.yml"), Config.YAML);
-        if (config.getInt("version") < CONFIG_VERSION) {
-            getServer().getLogger().warning("[FireLiquidRestriction] Please delete old config file.");
-            getServer().getPluginManager().disablePlugin(this);
-        }
         getServer().getPluginManager().registerEvents(this, this);
+        initConfig();
     }
 
     @EventHandler(priority = EventPriority.NORMAL)
@@ -155,9 +152,19 @@ public class FireLiquidRestriction extends PluginBase implements Listener {
         }
     }
 
+    private void initConfig() {
+        saveResource("lang/" + LanguageManager.getPluginLang() + "/config.yml", "config.yml", false);
+        config = new Config(new File("./plugins/FireLiquidRestriction", "config.yml"), Config.YAML);
+        if (config.getInt("version") < CONFIG_VERSION) {
+            getServer().getLogger().warning("[FireLiquidRestriction] Please delete old config file.");
+            getServer().getPluginManager().disablePlugin(this);
+        }
+        PREFIX = config.getString("prefix");
+    }
+
     private void sendMessage(String configKey) {
         if (config.getBoolean(configKey+".message")) {
-            Server.getInstance().broadcastMessage(TextFormat.RED+"FLR>>"+TextFormat.YELLOW+config.getString(configKey+".content"));
+            Server.getInstance().broadcastMessage(TextFormat.RED+PREFIX+TextFormat.YELLOW+config.getString(configKey+".content"));
         }
     }
 }
