@@ -1,4 +1,4 @@
-package net.comorevi.np.util;
+package net.comorevi.np.flr.util;
 
 import cn.nukkit.Server;
 

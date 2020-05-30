@@ -1,4 +1,4 @@
-package net.comorevi.np;
+package net.comorevi.np.flr;
 
 import cn.nukkit.Server;
 import cn.nukkit.block.Block;
@@ -16,7 +16,7 @@ import cn.nukkit.event.player.PlayerBucketFillEvent;
 import cn.nukkit.plugin.PluginBase;
 import cn.nukkit.utils.Config;
 import cn.nukkit.utils.TextFormat;
-import net.comorevi.np.util.LanguageManager;
+import net.comorevi.np.flr.util.LanguageManager;
 
 import java.io.File;
 

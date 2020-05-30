@@ -8,6 +8,11 @@ You can use languages below(If you configured other language, the plugin choose 
 - English
 - 日本語
 
+I would like you to contribute add more languages support.
+### Step to add new language
+Create config.yml of the language: resources/lang/{lang code}/config.yml
+Then add your language code to availableLanguages on LanguageManager.
+
 ## Feature 
 - Limiting the ignition of each block.
 - Limit the explosion.
