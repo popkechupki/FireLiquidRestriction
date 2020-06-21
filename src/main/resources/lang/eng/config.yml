@@ -1,5 +1,5 @@
 # Config version. DO NOT CHANGE!
-version: 2
+version: 3
 
 ## Prefix
 prefix: "FLR>> "
@@ -51,7 +51,7 @@ RestrictUsingBucket:
 #### Lava
 RestrictUsingLavaBucket: true
 #### Water
-RestrictUsingWatarBucket: true
+RestrictUsingWaterBucket: true
 
 ## Restrict place water and lava block.
 RestrictPlace:
@@ -64,7 +64,7 @@ RestrictPlace:
 #### Lava
 RestrictPlaceLava: true
 #### Water
-RestrictPlaceWatar: true
+RestrictPlaceWater: true
 
 ## Restrict flow of water and lava.
 RestrictFlow:
@@ -77,4 +77,4 @@ RestrictFlow:
 #### Lava
 RestrictFlowLava: true
 #### Water
-RestrictFlowWatar: true
+RestrictFlowWater: true

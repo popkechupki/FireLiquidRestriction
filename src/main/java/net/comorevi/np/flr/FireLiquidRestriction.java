@@ -104,7 +104,7 @@ public class FireLiquidRestriction extends PluginBase implements Listener {
                     }
                     break;
                 case Block.WATER:
-                    if (config.getBoolean("RestrictPlaceWatar")) {
+                    if (config.getBoolean("RestrictPlaceWater")) {
                         event.setCancelled();
                         sendMessage("RestrictPlace");
                     }
@@ -122,7 +122,7 @@ public class FireLiquidRestriction extends PluginBase implements Listener {
         } else if (event.getBucket().getName().equals("Lava Bucket") && config.getBoolean("RestrictUsingLavaBucket")) {
             event.setCancelled();
             sendMessage("RestrictUsingBucket");
-        } else if (event.getBucket().getName().equals("Water Bucket") && config.getBoolean("RestrictUsingWatarBucket")) {
+        } else if (event.getBucket().getName().equals("Water Bucket") && config.getBoolean("RestrictUsingWaterBucket")) {
             event.setCancelled();
             sendMessage("RestrictUsingBucket");
         }
@@ -137,7 +137,7 @@ public class FireLiquidRestriction extends PluginBase implements Listener {
         } else if (event.getBlockClicked() instanceof BlockLava && config.getBoolean("RestrictUsingLavaBucket")) {
             event.setCancelled();
             sendMessage("RestrictUsingBucket");
-        } else if (event.getBlockClicked() instanceof BlockWater && config.getBoolean("RestrictUsingWatarBucket")) {
+        } else if (event.getBlockClicked() instanceof BlockWater && config.getBoolean("RestrictUsingWaterBucket")) {
             event.setCancelled();
             sendMessage("RestrictUsingBucket");
         }
@@ -146,7 +146,7 @@ public class FireLiquidRestriction extends PluginBase implements Listener {
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onLiquidFlow(LiquidFlowEvent event) {
         if (config.getStringList("IgnoreWorlds").contains(event.getBlock().getLocation().getLevel().getName())) return;
-        if (config.getBoolean("RestrictFlow.force") || event.getSource() instanceof BlockLava || event.getSource() instanceof BlockWater) {
+        if ((config.getBoolean("RestrictFlow.force") && (event.getSource() instanceof BlockLava || event.getSource() instanceof BlockWater)) || (config.getBoolean("RestrictFlowLava") && event.getSource() instanceof BlockLava) || (config.getBoolean("RestrictFlowWater") && event.getSource() instanceof BlockWater)) {
             event.setCancelled();
             sendMessage("RestrictFlow");
         }

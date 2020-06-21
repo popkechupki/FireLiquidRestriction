@@ -1,5 +1,5 @@
 ## 設定ファイルのバージョンです。変更しないでください。
-version: 2
+version: 3
 
 ## Prefix
 prefix: "FLR>> "
@@ -42,7 +42,7 @@ CancelExplosion:
 
 ## バケツによる設置の制限
 RestrictUsingBucket:
-  ## falseにすると爆発を許可します。
+  ## falseにするとアイテムごとに設定できます。
   force: true
   ## falseにするとメッセージは流れなくなります。
   message: true
@@ -51,11 +51,11 @@ RestrictUsingBucket:
 ### マグマ
 RestrictUsingLavaBucket: true
 ### 水
-RestrictUsingWatarBucket: true
+RestrictUsingWaterBucket: true
 
 ## 水・マグマブロックの設置の制限
 RestrictPlace:
-  ## falseにすると爆発を許可します。
+  ## falseにするとアイテムごとに設定できます。
   force: true
   ## falseにするとメッセージは流れなくなります。
   message: true
@@ -64,11 +64,11 @@ RestrictPlace:
 ### マグマ
 RestrictPlaceLava: true
 ### 水
-RestrictPlaceWatar: true
+RestrictPlaceWater: true
 
 ## 水・マグマの流れを制限
 RestrictFlow:
-  ## falseにすると爆発を許可します。
+  ## falseにするとアイテムごとに設定できます。
   force: true
   ## falseにするとメッセージは流れなくなります。
   message: true
@@ -77,4 +77,4 @@ RestrictFlow:
 ### マグマ
 RestrictFlowLava: true
 ### 水
-RestrictFlowWatar: true
+RestrictFlowWater: true
