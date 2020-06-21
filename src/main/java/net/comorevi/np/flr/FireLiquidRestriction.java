@@ -1,5 +1,6 @@
 package net.comorevi.np.flr;
 
+import cn.nukkit.Player;
 import cn.nukkit.Server;
 import cn.nukkit.block.Block;
 import cn.nukkit.block.BlockLava;
@@ -35,6 +36,7 @@ public class FireLiquidRestriction extends PluginBase implements Listener {
     public void onBlockIgnite(BlockIgniteEvent event) {
         if (config.getStringList("IgnoreWorlds").contains(event.getBlock().getLocation().getLevel().getName())) return;
         if (config.getBoolean("RestrictIgnite.force")) {
+            if (event.getCause() == BlockIgniteEvent.BlockIgniteCause.FLINT_AND_STEEL && config.getBoolean("RestrictIgnite.ignoreOP") && ((Player) event.getEntity()).isOp()) return;
             event.setCancelled();
             sendMessage("RestrictIgnite");
         } else {
@@ -70,7 +72,9 @@ public class FireLiquidRestriction extends PluginBase implements Listener {
                     }
                     break;
                 case FLINT_AND_STEEL:
-                    if (config.getBoolean("ByFlintAndSteel")) {
+                    if (config.getBoolean("RestrictIgnite.ignoreOP") && ((Player) event.getEntity()).isOp()) {
+                        return;
+                    } else if (config.getBoolean("ByFlintAndSteel")) {
                         event.setCancelled();
                         sendMessage("RestrictIgnite");
                     }
@@ -91,6 +95,7 @@ public class FireLiquidRestriction extends PluginBase implements Listener {
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onBlockPlace(BlockPlaceEvent event) {
         if (config.getStringList("IgnoreWorlds").contains(event.getBlock().getLocation().getLevel().getName())) return;
+        if (config.getBoolean("RestrictPlace.ignoreOP") && event.getPlayer().isOp()) return;
         if (config.getBoolean("RestrictPlace.force")) {
             if (event.getBlock().getId() != Block.LAVA && event.getBlock().getId() != Block.WATER) return;
             event.setCancelled();
@@ -116,6 +121,7 @@ public class FireLiquidRestriction extends PluginBase implements Listener {
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onBucketEmpty(PlayerBucketEmptyEvent event) {
         if (config.getStringList("IgnoreWorlds").contains(event.getPlayer().getLocation().getLevel().getName())) return;
+        if (config.getBoolean("RestrictUsingBucket.ignoreOP")) return;
         if (config.getBoolean("RestrictUsingBucket.force")) {
             event.setCancelled();
             sendMessage("RestrictUsingBucket");
@@ -131,6 +137,7 @@ public class FireLiquidRestriction extends PluginBase implements Listener {
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onBucketFill(PlayerBucketFillEvent event) {
         if (config.getStringList("IgnoreWorlds").contains(event.getPlayer().getLocation().getLevel().getName())) return;
+        if (config.getBoolean("RestrictUsingBucket.ignoreOP")) return;
         if (config.getBoolean("RestrictUsingBucket.force")) {
             event.setCancelled();
             sendMessage("RestrictUsingBucket");

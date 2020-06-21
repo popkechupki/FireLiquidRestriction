@@ -1,5 +1,5 @@
 # Config version. DO NOT CHANGE!
-version: 3
+version: 4
 
 ## Prefix
 prefix: "FLR>> "
@@ -18,6 +18,8 @@ RestrictIgnite:
   ## If you set false, this plugin is not send warn message.
   message: true
   content: "Cancel ignition to block."
+  ## Does it apply to the OP as well (if false, apply, if true, ignore).
+  ignoreOP: false
 ### Detail settings
 #### Restrict ignition by flint and steel.
 ByFlintAndSteel: true
@@ -46,7 +48,9 @@ RestrictUsingBucket:
   force: true
   ## If you set false, this plugin is not send warn message.
   message: true
-  content: "液体の設置・取得をキャンセルしました！"
+  content: "Cancelled the installation/acquisition of fluids."
+  ## Does it apply to the OP as well (if false, apply, if true, ignore).
+  ignoreOP: false
 ### Detail settings
 #### Lava
 RestrictUsingLavaBucket: true
@@ -60,6 +64,8 @@ RestrictPlace:
   ## If you set false, this plugin is not send warn message.
   message: true
   content: "Cancel placement liquid blocks."
+  ## Does it apply to the OP as well (if false, apply, if true, ignore).
+  ignoreOP: false
 ### Detail settings
 #### Lava
 RestrictPlaceLava: true

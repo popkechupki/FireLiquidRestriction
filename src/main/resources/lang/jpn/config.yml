@@ -1,5 +1,5 @@
 ## 設定ファイルのバージョンです。変更しないでください。
-version: 3
+version: 4
 
 ## Prefix
 prefix: "FLR>> "
@@ -18,6 +18,8 @@ RestrictIgnite:
   ## falseにするとメッセージは流れなくなります。
   message: true
   content: "ブロックへの着火をキャンセルしました！"
+  ## OPにも適用するか（falseなら適用、trueなら無視）
+  ignoreOP: false
 ### 個別の着火要因による制限
 #### 火打ち石による着火を制限
 ByFlintAndSteel: true
@@ -47,6 +49,8 @@ RestrictUsingBucket:
   ## falseにするとメッセージは流れなくなります。
   message: true
   content: "液体の設置・取得をキャンセルしました！"
+  ## OPにも適用するか（falseなら適用、trueなら無視）
+  ignoreOP: false
 ### 個別の設定
 ### マグマ
 RestrictUsingLavaBucket: true
@@ -60,6 +64,8 @@ RestrictPlace:
   ## falseにするとメッセージは流れなくなります。
   message: true
   content: "液体プロックの設置をキャンセルしました！"
+  ## OPにも適用するか（falseなら適用、trueなら無視）
+  ignoreOP: false
 ### 個別の設定
 ### マグマ
 RestrictPlaceLava: true
